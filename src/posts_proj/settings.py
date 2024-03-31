@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     #3rd party apps
     'crispy_forms',
 ]
+CRISPY_TEMPLATE_PACK='bootstrap4'
+LOGIN_URL='/admin/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
