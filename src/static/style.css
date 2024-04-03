@@ -11,3 +11,57 @@
 .dz:hover{
     background-color: aliceblue !important;
 }
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.username {
+    margin-bottom: 20px;
+}
+
+.avatar {
+    height: 150px;
+    width: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
+.profile-form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 500px;
+}
+
+.profile-form .form-field {
+    margin-bottom: 15px;
+}
+
+.profile-form textarea {
+    width: 100%;
+    min-height: 150px;
+    resize: vertical; /* Allows the user to resize the bio box vertically */
+}
+
+.save-btn {
+    padding: 10px 15px;
+    margin-top: 10px;
+    align-self: center; /* Center the save button */
+}
+
+.profile-form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.profile-form span {
+    display: block;
+    font-size: 0.9em;
+    margin-top: 5px;
+}

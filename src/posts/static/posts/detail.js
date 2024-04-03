@@ -1,4 +1,3 @@
-console.log("heelo worlddetail ");
 const csrf=document.getElementsByName('csrfmiddlewaretoken')
 const alertBox=document.getElementById('alert-box')
 const postBox=document.getElementById('post-box')
@@ -29,6 +28,7 @@ $.ajax({
     success:function(response){
         console.log(response)
         const data=response.data
+        console.log(data)
 
         if(data.logged_in!== data.author){
             console.log('different')

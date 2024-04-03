@@ -104,11 +104,13 @@ const getData=()=>{
           }
           else if(response.size<=visible){
             loadBtn.classList.add('not-visible')
+            spinnerBox.classList.add('not-visible');
             endBox.textContent="No more posts to load.."
           }
         },
         error: function (error) {
           console.log(error);
+          spinnerBox.classList.add('not-visible');
         },
       });
 }

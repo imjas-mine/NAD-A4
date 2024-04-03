@@ -5,6 +5,8 @@ from .forms import PostForm
 from profiles.models import Profile
 from .utils import action_permission
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect
+
 # Create your views here.
 
 @login_required
@@ -43,7 +45,6 @@ def post_detail(request,pk):
 
 @login_required
 def post_detail_data_view(request,pk):
-    if request.method=='POST':
         obj=Post.objects.get(pk=pk)
         data={
             'id':obj.id,
@@ -53,7 +54,7 @@ def post_detail_data_view(request,pk):
             'logged_in': request.user.username,
         }
         return JsonResponse({'data':data})
-    return redirect('posts:main-board')
+        return redirect('posts:main-board')
 
 @login_required
 def load_post_data_view(request, num_posts):
