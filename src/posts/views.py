@@ -3,8 +3,11 @@ from .models import Post,Photo
 from django.http import JsonResponse,HttpResponse
 from .forms import PostForm
 from profiles.models import Profile
+from .utils import action_permission
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
+@login_required
 def post_list_and_create(request):
     form=PostForm(request.POST or None)
    # qs=Post.objects.all()
@@ -26,6 +29,7 @@ def post_list_and_create(request):
     }
     return render(request,'posts/main.html',context)
 
+@login_required
 def post_detail(request,pk):
     obj=Post.objects.get(pk=pk)
     form=PostForm()
@@ -37,18 +41,21 @@ def post_detail(request,pk):
     
     return render(request,'posts/detail.html',context)
 
+@login_required
 def post_detail_data_view(request,pk):
-    obj=Post.objects.get(pk=pk)
-    data={
-        'id':obj.id,
-        'title': obj.title,
-        'body':obj.body,
-        'author': obj.author.user.username,
-        'logged_in': request.user.username,
-        
-    }
-    return JsonResponse({'data':data})
+    if request.method=='POST':
+        obj=Post.objects.get(pk=pk)
+        data={
+            'id':obj.id,
+            'title': obj.title,
+            'body':obj.body,
+            'author': obj.author.user.username,
+            'logged_in': request.user.username,
+        }
+        return JsonResponse({'data':data})
+    return redirect('posts:main-board')
 
+@login_required
 def load_post_data_view(request, num_posts):
     # if request.method=='POST':
         visible=3
@@ -70,6 +77,7 @@ def load_post_data_view(request, num_posts):
             data.append(item)
         return JsonResponse({'data':data[lower:upper],'size':size})
 
+@login_required
 def like_unlike_post(request):
     if request.method=='POST':
         pk=request.POST.get('pk')
@@ -81,7 +89,10 @@ def like_unlike_post(request):
             liked=True
             obj.liked.add(request.user)
         return JsonResponse({'liked':liked, 'count':obj.like_count})
+    return redirect('posts:main-board')
 
+@login_required
+@action_permission
 def update_post(request,pk):
     obj=Post.objects.get(pk=pk)
     if request.method=='POST':
@@ -90,18 +101,22 @@ def update_post(request,pk):
         obj.title=new_title
         obj.body=new_body
         obj.save()
-    return JsonResponse({
+        return JsonResponse({
         'title':new_title,
         'body':new_body,
-    })
-
+        })
+    return redirect('posts:main-board')
+    
+@login_required
+@action_permission
 def delete_post(request,pk):
     obj=Post.objects.get(pk=pk)
     if request.method=='POST':
         obj.delete()
-    return JsonResponse({})
-
-
+        return JsonResponse({'msg':'some message'})
+    #return JsonResponse({'msg':'access denied- ajax only'})
+    return redirect('posts:main-board')
+@login_required
 def image_upload_view(request):
     if request.method=='POST':
         img=request.FILES.get('file')

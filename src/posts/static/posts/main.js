@@ -11,7 +11,7 @@ const csrf=document.getElementsByName('csrfmiddlewaretoken')
 const alertBox=document.getElementById('alert-box')
 const url=window.location.href
 
-const addBtn=document.getElementById('add_btn')
+const addBtn=document.getElementById('add-btn')
 const closeBtn=[...document.getElementsByClassName('add-modal-close')]
 const dropzone=document.getElementById('my-dropzone')
 
