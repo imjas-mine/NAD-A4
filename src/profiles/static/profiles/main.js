@@ -1,7 +1,8 @@
+console.log("Hello");
 const avatarBox=document.getElementById('avatar-box')
 const alertBox=document.getElementById('alert-box')
 const profileForm=document.getElementById('profile-form')
-const csrf=document.getElementById('csrfmiddlewaretoken')
+const csrf=document.getElementsByName('csrfmiddlewaretoken')
 const bioInput=document.getElementById('id_bio')
 const avatarInput=document.getElementById('id_avatar')
 profileForm.addEventListener('submit',e=>{
@@ -20,7 +21,7 @@ profileForm.addEventListener('submit',e=>{
         success:function(response){
             console.log(response)
             avatarBox.innerHTML=`
-        <img src="${response.avatar}" class="rounded" height="200px" width="auto" alt="${repsonse.user}">
+        <img src="${response.avatar}" class="rounded" height="200px" width="auto" alt="${response.user}">
                 
             `
             bioInput.value=response.bio
@@ -35,6 +36,6 @@ profileForm.addEventListener('submit',e=>{
     })
 })
 
-function handleAlerts(type, message){
-    alertBox.innerHTML = `<div class="alert alert-${type}" role="alert">${message}</div>`;
-}
+// function handleAlerts(type, message){
+//     alertBox.innerHTML = `<div class="alert alert-${type}" role="alert">${message}</div>`;
+// }

@@ -19,10 +19,11 @@ my profile
     </div>
     <form id="profile-form" class="text-center">
         {% csrf_token %}
-        <div class="form-group">
+        {{form.as_p}}
+        <!-- <div class="form-group">
             <label for="id_bio">Bio</label>
             <textarea name="bio" id="id_bio" class="form-control">{{ form.bio.value }}</textarea>
-        </div>
+        </div> -->
         <button type="submit" class="btn btn-primary mt-3">save</button>
     </form>
 {% endblock content %} 

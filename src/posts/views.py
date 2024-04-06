@@ -45,6 +45,7 @@ def post_detail(request,pk):
 
 @login_required
 def post_detail_data_view(request,pk):
+    if request.method=='GET':
         obj=Post.objects.get(pk=pk)
         data={
             'id':obj.id,
@@ -54,11 +55,11 @@ def post_detail_data_view(request,pk):
             'logged_in': request.user.username,
         }
         return JsonResponse({'data':data})
-        return redirect('posts:main-board')
+    return redirect('posts:main-board')
 
 @login_required
 def load_post_data_view(request, num_posts):
-    # if request.method=='POST':
+    if request.method=='GET':
         visible=3
         upper=num_posts
         lower=upper-visible
@@ -77,6 +78,7 @@ def load_post_data_view(request, num_posts):
             }
             data.append(item)
         return JsonResponse({'data':data[lower:upper],'size':size})
+    return redirect('posts:main-board')
 
 @login_required
 def like_unlike_post(request):
